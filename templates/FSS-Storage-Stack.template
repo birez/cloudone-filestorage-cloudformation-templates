@@ -82,7 +82,7 @@ Parameters:
   KMSKeyARNForBucketSSE:
     Default: ''
     Description: The ARN for the KMS master key used to encrypt S3 bucket objects. Leave it blank if you haven't enabled SSE-KMS for the bucket.
-    Type: String
+    Type: CommaDelimitedList
   TriggerWithObjectCreatedEvent:
     Default: 'true'
     AllowedValues:
@@ -177,7 +177,7 @@ Conditions:
   HasSNSTopicPrefix:
     !Not [!Equals ['', !Ref SNSTopicPrefix]]
   IsBucketSSEKMSEnabled:
-    !Not [!Equals ['', !Ref KMSKeyARNForBucketSSE]]
+    !Not [!Equals ['', !Join ['', !Ref KMSKeyARNForBucketSSE]]]
   IsQueueSSEKMSEnabled:
     !Not [!Equals ['', !Ref KMSKeyARNForQueueSSE]]
   IsTriggeredWithObjectCreatedEvent:
